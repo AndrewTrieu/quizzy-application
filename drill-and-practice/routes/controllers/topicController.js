@@ -34,10 +34,10 @@ const addTopic = async ({ request, response, render, state }) => {
 };
 
 const deleteTopic = async ({ params, response, state }) => {
-  const id = params.id;
+  const topicId = params.tId;
   const admin = (await state.session.get("user")).admin;
   if (admin) {
-    await topicService.deleteTopic(id);
+    await topicService.deleteTopic(topicId);
   }
   response.redirect("/topics");
 };

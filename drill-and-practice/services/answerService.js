@@ -17,15 +17,18 @@ const addAnswer = async (questionId, optionText, isCorrect) => {
 
 const deleteAnswer = async (questionId, optionId) => {
   await sql`DELETE FROM question_answer_options WHERE question_id = ${questionId} AND id = ${optionId}`;
-};
-
-const deleteAnswerByOptionId = async (optionId) => {
   await sql`DELETE FROM question_answer_options WHERE id = ${optionId}`;
 };
 
-const getCorrectOption = async (questionId) => {
+const getCorrectOptionIds = async (questionId) => {
   const result =
-    await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId} AND is_correct = true`;
+    await sql`SELECT id FROM question_answer_options WHERE question_id = ${questionId} AND is_correct = true`;
+  return result.rows;
+};
+
+const getCorrectOptions = async (questionId) => {
+  const result =
+    await sql`SELECT option_text FROM question_answer_options WHERE question_id = ${questionId} AND is_correct = true`;
   return result.rows;
 };
 
@@ -38,7 +41,7 @@ export {
   getAnswersByQuestionId,
   addAnswer,
   deleteAnswer,
-  deleteAnswerByOptionId,
-  getCorrectOption,
+  getCorrectOptionIds,
+  getCorrectOptions,
   storeAnswer,
 };

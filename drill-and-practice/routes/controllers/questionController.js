@@ -8,47 +8,121 @@ const validationRules = {
 };
 
 const addQuestion = async ({ request, response, params, state, render }) => {
-    const topicId = params.id;
-    const userId (await state.session.get("user")).id;
-    const body = request.body({ type: "form-data" });
-    const formData = await body.value;
-    const questionData = {
-        topicId: topicId,
-        question: formData.get("question_text"),
-    };
-    const [passes, errors] = await validasaur.validate(questionData, validationRules);
+  const topicId = params.tId;
+  const userId = (await state.session.get("user")).id;
+  const body = request.body({ type: "form-data" });
+  const formData = await body.value;
+  const questionData = {
+    topicId: topicId,
+    question: formData.get("question_text"),
+  };
+  const [passes, errors] = await validasaur.validate(
+    questionData,
+    validationRules
+  );
 
-    if (!passes) {
-        response.status = 422;
-        questionData.errors = errors;
-        questionData.currentQuestionsByTopicId = await questionService.getQuestionsByTopicId(topicId);
-        render("questions.eta", questionData);
-    } else {
-        await questionService.addQuestion(userId, topicId, questionData.question);
-        response.redirect(`/topics/${topicId}`);
-    }
+  if (!passes) {
+    response.status = 422;
+    questionData.errors = errors;
+    questionData.currentQuestions = await questionService.getQuestionsByTopicId(
+      topicId
+    );
+    render("questions.eta", questionData);
+  } else {
+    await questionService.addQuestion(userId, topicId, questionData.question);
+    response.redirect(`/topics/${topicId}`);
+  }
 };
 
-const listQuestions = async ({ params, render, state }) => {
-    const topicId = params.id;
-    render("questions.eta", {
-        topicId: topicId,
-        currentQuestions = await questionService.getQuestionsByTopicId(topicId),
-    });
+const listQuestions = async ({ params, render }) => {
+  const topicId = params.tId;
+  render("questions.eta", {
+    topicId: topicId,
+    currentQuestions: await questionService.getQuestionsByTopicId(topicId),
+  });
 };
 
 const showQuestion = async ({ params, render }) => {
-    const questionId = params.qId;
-    const questionData = await questionService.getQuestionById(questionId);
-    questionData.answers = await answerService.getAnswersByQuestionId(questionId);
-    questionData.topicId = params.id
-    render("question.eta", questionData);
+  const questionId = params.qId;
+  const questionData = await questionService.getQuestionById(questionId);
+  questionData.answers = await answerService.getAnswersByQuestionId(questionId);
+  questionData.topicId = params.id;
+  render("question.eta", questionData);
 };
 
 const deleteQuestion = async ({ params, response }) => {
-    const topicId = params.tId;
-    const questionId = params.qId;
-    await questionService.deleteQuestion(questionId);
-    response.redirect(`/topics/${topicId}`);
+  const topicId = params.tId;
+  const questionId = params.qId;
+  await questionService.deleteQuestion(questionId);
+  response.redirect(`/topics/${topicId}`);
 };
 
+const listQuiz = async ({ params, render }) => {
+  const topicId = params.tId;
+  const questionId = params.qId;
+  const questionData = await questionService.getQuestionById(questionId);
+  const quizData = {
+    topicId: topicId,
+    questionId: questionId,
+    question: questionData.question_text,
+    answers: await answerService.getAnswersByQuestionId(questionId),
+  };
+  render("quiz.eta", quizData);
+};
+
+const getRandQuestion = async ({ params, response }) => {
+  const topicId = params.tId;
+  const randQuestion = await questionService.getRandQuestion(topicId);
+  if (randQuestion === null) {
+    response.body = "No questions in this topic!";
+  } else {
+    response.redirect(`/topics/${topicId}/questions/${randQuestion.id}/quiz`);
+  }
+};
+
+const listQuizTopic = async ({ render }) => {
+  render("quizTopic.eta", {
+    allTopics: await topicService.getAllTopics(),
+  });
+};
+
+const storeAnswer = async ({ response, params, state }) => {
+  const topicId = params.tId;
+  const questionId = params.qId;
+  const optionId = params.oId;
+  const userId = (await state.session.get("user")).id;
+  const correctOptionIds = await answerService.getCorrectOptionIds(questionId);
+  const correct = correctOptionIds.includes(Number(optionId));
+  await answerService.storeAnswer(userId, questionId, optionId);
+  if (correct) {
+    response.redirect(`/quiz/${topicId}/questions/${questionId}/correct`);
+  } else {
+    response.redirect(`/quiz/${topicId}/questions/${questionId}/incorrect`);
+  }
+};
+
+const showCorrect = async ({ params, render }) => {
+  render("correct.eta", { tId: params.tId });
+};
+
+const showIncorrect = async ({ params, render }) => {
+  const questionId = params.qId;
+  const correctOptions = {
+    data: [await answerService.getCorrectOptions(questionId)],
+    tId: params.tId,
+  };
+  render("incorrect.eta", correctOptions);
+};
+
+export {
+  addQuestion,
+  listQuestions,
+  showQuestion,
+  deleteQuestion,
+  listQuiz,
+  getRandQuestion,
+  listQuizTopic,
+  storeAnswer,
+  showCorrect,
+  showIncorrect,
+};
