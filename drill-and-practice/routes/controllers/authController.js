@@ -27,7 +27,6 @@ const createUser = async ({ request, response, render }) => {
     response.status = 422;
     userData.errors = errors;
     render("register.eta", userData);
-    return;
   } else {
     const hashedPassword = await bcrypt.hash(userData.password);
     const user = await authServices.createUser(userData.email, hashedPassword);

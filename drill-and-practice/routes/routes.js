@@ -8,5 +8,8 @@ router.get("/", mainController.showMain);
 router.get("/auth/login", authController.showLogin);
 router.get("/auth/register", authController.showRegister);
 router.post("/auth/login", authController.login);
+router.get("/topics", topicController.listTopics);
+router.post("/topics", topicController.addTopic);
+router.get("/topics/:id/delete", topicController.deleteTopic);
 
 export { router };
