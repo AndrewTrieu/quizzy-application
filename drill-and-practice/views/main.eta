@@ -2,11 +2,13 @@
 
 <h1>MCQ Application</h1>
 
-<P>This is a web application that is used for repeated practice of learned content. The application provides a list of topics and allows creating multiple-choice questions into those topics that are then answered by self and others. The application also shows basic statistics: the total number of available questions and the total number of question answers. In addition, the application also provides an API for retrieving and answering random questions.</p>
+<P>This is a web application that is used for repeated practice of learned content. The application provides a list of topics and allows creating multiple-choice questions into those topics that are then answered by self and others.</p>
 
-<p>Are you already registered? <a href="/login">Login</a></p>
+<p>The application also shows basic statistics: the total number of available questions and the total number of question answers. In addition, the application also provides an API for retrieving and answering random questions.</p>
 
-<p>Not registered yet? <a href="/register">Register</a></p>
+<p>Are you already registered? <a href="/auth/login">Login</a></p>
+
+<p>Not registered yet? <a href="/auth/register">Register</a></p>
 
 <h2>Statistics</h2>
 <p>Total number of:</p>
