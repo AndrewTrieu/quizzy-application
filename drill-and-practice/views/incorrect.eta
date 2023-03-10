@@ -1,0 +1,15 @@
+<% layout("./layouts/layout.eta") %>
+<h1>Your answer is not correct.</h1>
+
+<h2>Correct answer:</h2>
+
+<% if (it.data && it.data.length > 0) { %>
+
+<% it.data.forEach(item => { %>
+    <%= item %>
+<% }); %>
+<% } else { %>
+<p>Correct options are not found.</p>
+<% } %>
+
+<a href="/quiz/<%= it.tid %>">Next question</a>

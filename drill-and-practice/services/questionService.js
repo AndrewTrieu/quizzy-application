@@ -32,6 +32,14 @@ const getRandQuestion = async (topicId) => {
   return result.rows[0];
 };
 
+const getRandQuestionAPI = async () => {
+  const result = await sql`SELECT * FROM questions ORDER BY RANDOM() LIMIT 1`;
+  if (result.rows.length === 0) {
+    return null;
+  }
+  return result.rows[0];
+};
+
 export {
   countQuestions,
   getQuestionsByTopicId,
@@ -39,4 +47,5 @@ export {
   addQuestion,
   deleteQuestion,
   getRandQuestion,
+  getRandQuestionAPI,
 };
