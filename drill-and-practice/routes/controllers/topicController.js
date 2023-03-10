@@ -25,7 +25,7 @@ const addTopic = async ({ request, response, render, state }) => {
     if (!admin) {
       topicData.errors = { admin: { error: "You are not an admin!" } };
     }
-    topicData.allTopics = await topicService.getAllTopics();
+    topicData.topics = await topicService.getAllTopics();
     render("topics.eta", topicData);
   } else {
     await topicService.addTopic(userId, topicData.name);

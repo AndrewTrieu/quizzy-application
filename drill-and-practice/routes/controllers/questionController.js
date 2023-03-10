@@ -12,15 +12,16 @@ const addQuestion = async ({ request, response, params, state, render }) => {
   const userId = (await state.session.get("user")).id;
   const body = request.body({ type: "form-data" });
   const formData = await body.value;
+  const topicName = (await topicService.getTopicByTopicId(topicId)).name;
   const questionData = {
     topicId: topicId,
+    topicName: topicName,
     question: formData.get("question_text"),
   };
   const [passes, errors] = await validasaur.validate(
     questionData,
     validationRules
   );
-
   if (!passes) {
     response.status = 422;
     questionData.errors = errors;
@@ -36,17 +37,21 @@ const addQuestion = async ({ request, response, params, state, render }) => {
 
 const listQuestions = async ({ params, render }) => {
   const topicId = params.tId;
+  const topicName = (await topicService.getTopicByTopicId(topicId)).name;
   render("questions.eta", {
     topicId: topicId,
+    topicName: topicName,
     currentQuestions: await questionService.getQuestionsByTopicId(topicId),
   });
 };
 
 const showQuestion = async ({ params, render }) => {
   const questionId = params.qId;
-  const questionData = await questionService.getQuestionById(questionId);
-  questionData.answers = await answerService.getAnswersByQuestionId(questionId);
-  questionData.topicId = params.id;
+  const questionData = await questionService.getQuestionByQuestionId(
+    questionId
+  );
+  questionData.details = await answerService.getAnswersByQuestionId(questionId);
+  questionData.topicId = params.tId;
   render("question.eta", questionData);
 };
 
@@ -60,7 +65,9 @@ const deleteQuestion = async ({ params, response }) => {
 const listQuiz = async ({ params, render }) => {
   const topicId = params.tId;
   const questionId = params.qId;
-  const questionData = await questionService.getQuestionById(questionId);
+  const questionData = await questionService.getQuestionByQuestionId(
+    questionId
+  );
   const quizData = {
     topicId: topicId,
     questionId: questionId,
@@ -81,8 +88,8 @@ const getRandQuestion = async ({ params, response }) => {
 };
 
 const listQuizTopics = async ({ render }) => {
-  render("quizTopic.eta", {
-    allTopics: await topicService.getAllTopics(),
+  render("quizTopics.eta", {
+    topics: await topicService.getAllTopics(),
   });
 };
 

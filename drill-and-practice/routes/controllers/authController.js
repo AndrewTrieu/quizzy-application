@@ -14,7 +14,7 @@ const showRegister = ({ render }) => {
   render("register.eta");
 };
 
-const createUser = async ({ request, response, render }) => {
+const register = async ({ request, response, render }) => {
   const body = request.body({ type: "form-data" });
   const params = await body.value;
   const userData = {
@@ -62,4 +62,4 @@ const login = async ({ request, response, state, render }) => {
   response.direct("/topics");
 };
 
-export { showLogin, showRegister, createUser, login };
+export { showLogin, showRegister, register, login };

@@ -1,0 +1,35 @@
+<% layout("./layouts/layout.eta") %>
+<h1>Topic <%= it.topicId %>: <%= it.topicName %></h1>
+
+<h2>All topic questions</h2>
+
+<% if (it.currentQuestions && it.currentQuestions.length > 0) { %>
+<ul>
+<% it.currentQuestions.forEach(item => { %>
+  <p><li>
+    <a href="/topics/<%= it.topicId %>/questions/<%= item.id %>"><%= item.question_text %></a>
+  </li></p>
+<% }); %>
+</ul>
+<% } else { %>
+<p>No question available for this topic.</p>
+<% } %>
+
+<h2>Add a question</h2>
+
+<% if (it.errors) { %>
+<ul>
+    <% Object.keys(it.errors).forEach((error) => { %>
+        <% Object.values(it.errors[error]).forEach((err) => { %>
+            <li><%= err %></li>
+        <% }); %>
+    <% }); %>
+</ul>
+<% } %>
+
+<form method="POST" action="/topics/<%= it.topicId %>/questions">
+Text:<br/>
+<textarea name="question_text"><%= it.question ? it.question : "" %></textarea><br/>
+<input type="submit" value="Add"/>
+</form>
+
