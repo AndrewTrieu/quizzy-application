@@ -1,5 +1,5 @@
 import * as topicService from "../../services/topicService.js";
-import { validasaur } from "../../deps";
+import { validasaur } from "../../deps.js";
 
 const validationRules = {
   name: [validasaur.required, validasaur.minLength(1)],

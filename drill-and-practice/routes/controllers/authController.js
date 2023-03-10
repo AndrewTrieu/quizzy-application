@@ -1,5 +1,5 @@
-import * as authServices from "../services/authServices.js";
-import { bcrypt, validasaur } from "../../deps";
+import * as authService from "../../services/authService.js";
+import { bcrypt, validasaur } from "../../deps.js";
 
 const validationRules = {
   email: [validasaur.isEmail, validasaur.required],
@@ -29,7 +29,7 @@ const createUser = async ({ request, response, render }) => {
     render("register.eta", userData);
   } else {
     const hashedPassword = await bcrypt.hash(userData.password);
-    const user = await authServices.createUser(userData.email, hashedPassword);
+    const user = await authService.createUser(userData.email, hashedPassword);
     response.direct("/auth/login");
   }
 };
@@ -38,7 +38,7 @@ const login = async ({ request, response, state, render }) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
 
-  const userDatabase = await authServices.findUser(params.get("email"));
+  const userDatabase = await authService.findUser(params.get("email"));
 
   if (userDatabase.length < 1) {
     response.status = 422;
