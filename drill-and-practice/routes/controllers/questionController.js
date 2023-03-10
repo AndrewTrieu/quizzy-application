@@ -80,7 +80,7 @@ const getRandQuestion = async ({ params, response }) => {
   }
 };
 
-const listQuizTopic = async ({ render }) => {
+const listQuizTopics = async ({ render }) => {
   render("quizTopic.eta", {
     allTopics: await topicService.getAllTopics(),
   });
@@ -121,7 +121,7 @@ export {
   deleteQuestion,
   listQuiz,
   getRandQuestion,
-  listQuizTopic,
+  listQuizTopics,
   storeAnswer,
   showCorrect,
   showIncorrect,
