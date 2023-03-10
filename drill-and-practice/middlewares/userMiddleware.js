@@ -1,7 +1,7 @@
 import * as authService from "../services/authService.js";
 
 const userMiddleware = async (context, next) => {
-  const user = await context.state.session.get("user");
+  const user = await context.state.session?.get("user");
 
   if (user) {
     const userFromDatabase = await authService.findUser(user.email);
