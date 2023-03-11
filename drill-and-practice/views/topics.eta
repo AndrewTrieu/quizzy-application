@@ -21,8 +21,9 @@
 <p>No available topics.</p>
 <% } %>
 
-<% if (it.errors) { %>
 <h2>Add a Topic</h2>
+
+<% if (it.errors) { %>
 <ul>
     <% Object.keys(it.errors).forEach((error) => { %>
         <% Object.values(it.errors[error]).forEach((err) => { %>

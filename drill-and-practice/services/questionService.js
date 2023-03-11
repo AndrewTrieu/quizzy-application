@@ -2,17 +2,17 @@ import { sql } from "../database/database.js";
 
 const countQuestions = async () => {
   const result = await sql`SELECT COUNT(id) FROM questions`;
-  return result.rows[0].count;
+  return result[0].count;
 };
 
 const getQuestionsByTopicId = async (topicId) => {
   const result = await sql`SELECT * FROM questions WHERE topic_id = ${topicId}`;
-  return result.rows;
+  return result;
 };
 
 const getQuestionByQuestionId = async (questionId) => {
   const result = await sql`SELECT * FROM questions WHERE id = ${questionId}`;
-  return result.rows[0];
+  return result[0];
 };
 
 const addQuestion = async (userId, topicId, question) => {
@@ -26,18 +26,18 @@ const deleteQuestion = async (questionId) => {
 const getRandQuestion = async (topicId) => {
   const result =
     await sql`SELECT * FROM questions WHERE topic_id = ${topicId} ORDER BY RANDOM() LIMIT 1`;
-  if (result.rows.length === 0) {
+  if (result.length === 0) {
     return null;
   }
-  return result.rows[0];
+  return result[0];
 };
 
 const getRandQuestionAPI = async () => {
   const result = await sql`SELECT * FROM questions ORDER BY RANDOM() LIMIT 1`;
-  if (result.rows.length === 0) {
+  if (result.length === 0) {
     return null;
   }
-  return result.rows[0];
+  return result[0];
 };
 
 export {

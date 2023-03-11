@@ -1,5 +1,7 @@
 <% layout("./layouts/layout.eta") %>
 
+<a href="/">Home</a>
+
 <h1>New user registration</h1>
 
 <form method="POST" action="/auth/register">
@@ -18,4 +20,5 @@
     <% }); %>
 <% } %>
 <br/>
+
 <a href="/auth/login">Are you already registered?</a>

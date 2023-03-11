@@ -8,7 +8,7 @@ const validationRules = {
 const addTopic = async ({ request, response, render, state }) => {
   const userId = (await state.session.get("user")).id;
   const admin = (await state.session.get("user")).admin;
-  const body = request.body({ type: "form-data" });
+  const body = request.body({ type: "form" });
   const params = await body.value;
   const topicData = {
     admin: admin,
@@ -46,7 +46,7 @@ const listTopics = async ({ render, state }) => {
   const user = await state.session.get("user");
   render("topics.eta", {
     admin: user.admin,
-    allTopics: await topicService.getAllTopics(),
+    topics: await topicService.getAllTopics(),
   });
 };
 

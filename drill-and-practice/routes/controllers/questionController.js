@@ -10,7 +10,7 @@ const validationRules = {
 const addQuestion = async ({ request, response, params, state, render }) => {
   const topicId = params.tId;
   const userId = (await state.session.get("user")).id;
-  const body = request.body({ type: "form-data" });
+  const body = request.body({ type: "form" });
   const formData = await body.value;
   const topicName = (await topicService.getTopicByTopicId(topicId)).name;
   const questionData = {

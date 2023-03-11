@@ -15,8 +15,10 @@ const showRegister = ({ render }) => {
 };
 
 const register = async ({ request, response, render }) => {
-  const body = request.body({ type: "form-data" });
+  const body = request.body({ type: "form" });
+  console.log(body);
   const params = await body.value;
+  console.log(params);
   const userData = {
     email: params.get("email"),
     password: params.get("password"),
@@ -29,20 +31,18 @@ const register = async ({ request, response, render }) => {
     render("register.eta", userData);
   } else {
     const hashedPassword = await bcrypt.hash(userData.password);
-    const user = await authService.createUser(userData.email, hashedPassword);
-    response.direct("/auth/login");
+    await authService.createUser(userData.email, hashedPassword);
+    response.redirect("/auth/login");
   }
 };
 
 const login = async ({ request, response, state, render }) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
-
   const userDatabase = await authService.findUser(params.get("email"));
-
   if (userDatabase.length < 1) {
     response.status = 422;
-    render("login.eta", { error: "User not found!" });
+    render("login.eta", { error: { error: "User not found!" } });
     return;
   }
 
@@ -54,12 +54,12 @@ const login = async ({ request, response, state, render }) => {
 
   if (!passwordCorrect) {
     response.status = 422;
-    render("login.eta", { error: "Incorrect password!" });
+    render("login.eta", { errors: { error: "Incorrect password!" } });
     return;
   }
 
-  await state.session.set("authenticated", user);
-  response.direct("/topics");
+  await state.session.set("user", user);
+  response.redirect("/topics");
 };
 
 export { showLogin, showRegister, register, login };

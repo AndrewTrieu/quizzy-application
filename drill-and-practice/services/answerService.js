@@ -2,13 +2,13 @@ import { sql } from "../database/database.js";
 
 const countAnswers = async () => {
   const result = await sql`SELECT COUNT(id) FROM question_answer_options`;
-  return result.rows[0].count;
+  return result[0].count;
 };
 
 const getAnswersByQuestionId = async (questionId) => {
   const result =
     await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId}`;
-  return result.rows;
+  return result;
 };
 
 const addAnswer = async (questionId, optionText, isCorrect) => {
@@ -23,13 +23,13 @@ const deleteAnswer = async (questionId, optionId) => {
 const getCorrectOptionIds = async (questionId) => {
   const result =
     await sql`SELECT id FROM question_answer_options WHERE question_id = ${questionId} AND is_correct = true`;
-  return result.rows;
+  return result;
 };
 
 const getCorrectOptions = async (questionId) => {
   const result =
     await sql`SELECT option_text FROM question_answer_options WHERE question_id = ${questionId} AND is_correct = true`;
-  return result.rows;
+  return result;
 };
 
 const storeAnswer = async (userId, questionId, optionId) => {

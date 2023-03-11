@@ -1,5 +1,7 @@
 <% layout("./layouts/layout.eta") %>
 
+<a href="/">Home</a>
+
 <h1>Login</h1>
 
 <form method="POST" action="/auth/login">
@@ -10,9 +12,13 @@
   <input type="submit" value="Login" />
 </form>
 
-<% if(it.error){ %>
-  <b><%= it.error %></b>
-  <br/>
+<% if (it.errors) { %>
+    <% Object.keys(it.errors).forEach((error) => { %>
+        <% Object.values(it.errors[error]).forEach((err) => { %>
+            <%= err %>
+        <% }); %>
+    <% }); %>
 <% } %>
+<br/>
 
 <a href="/auth/register">Are you a new user?</a>
