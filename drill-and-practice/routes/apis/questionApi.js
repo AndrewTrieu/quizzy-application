@@ -30,17 +30,12 @@ const getRandQuestion = async ({ response }) => {
 const checkRandQuestion = async ({ request, response }) => {
   const body = await request.body();
   const data = await body.value;
-  console.log(data);
   const questionId = data.questionId;
   const optionId = data.optionId;
-  console.log(questionId);
-  console.log(optionId);
   const correctOptionIds = (
     await answerService.getCorrectOptionIds(questionId)
   ).map((obj) => obj.id);
-  console.log(correctOptionIds);
   const correct = correctOptionIds.includes(Number(optionId));
-  console.log(correct);
   response.body = { correct: correct };
 };
 
