@@ -16,6 +16,7 @@ router.get("/auth/login", authController.showLogin);
 router.get("/auth/register", authController.showRegister);
 router.post("/auth/login", authController.login);
 router.post("/auth/register", authController.register);
+router.get("/logout", authController.logout);
 
 // topicController routes (topics)
 router.get("/topics", topicController.listTopics);

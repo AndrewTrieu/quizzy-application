@@ -62,4 +62,9 @@ const login = async ({ request, response, state, render }) => {
   response.redirect("/topics");
 };
 
-export { showLogin, showRegister, register, login };
+const logout = async ({ response, state }) => {
+  await state.session.set("user", null);
+  response.redirect("/");
+};
+
+export { showLogin, showRegister, register, login, logout };

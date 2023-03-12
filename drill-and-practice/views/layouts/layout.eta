@@ -11,7 +11,7 @@
   <% if (it.user) { %>
     <nav class="border fixed split-nav">
         <div class="nav-brand">
-            <h3>Hello <%= it.user.name %>. You have <%= it.user.chorecoins %> chore coins.</a></h3>
+            <h3>Hello <%= it.user.email %>!</h3>
         </div>
         <div class="collapsible">
             <input id="collapsible1" type="checkbox" name="collapsible1">
@@ -24,6 +24,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/topics">Topics</a></li>
                     <li><a href="/quiz">Quiz</a></li>
+                    <li><a href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
