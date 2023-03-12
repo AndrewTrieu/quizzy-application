@@ -26,6 +26,9 @@ const getTopicByTopicId = async (topicId) => {
 };
 
 const deleteTopic = async (topicId) => {
+  await sql`DELETE FROM question_answers WHERE question_id IN (SELECT id FROM questions WHERE topic_id = ${topicId})`;
+  await sql`DELETE FROM question_answer_options WHERE question_id IN (SELECT id FROM questions WHERE topic_id = ${topicId})`;
+  await sql`DELETE FROM questions WHERE topic_id = ${topicId}`;
   await sql`DELETE FROM topics WHERE id = ${topicId}`;
 };
 

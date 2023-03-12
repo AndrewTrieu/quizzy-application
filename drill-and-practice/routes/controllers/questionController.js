@@ -101,7 +101,6 @@ const storeAnswer = async ({ response, params, state }) => {
   const correctOptionIds = (
     await answerService.getCorrectOptionIds(questionId)
   ).map((obj) => obj.id);
-  console.log(correctOptionIds);
   const correct = correctOptionIds.includes(Number(optionId));
   await answerService.storeAnswer(userId, questionId, optionId);
   if (correct) {

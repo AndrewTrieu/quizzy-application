@@ -20,7 +20,7 @@ router.post("/auth/register", authController.register);
 // topicController routes (topics)
 router.get("/topics", topicController.listTopics);
 router.post("/topics", topicController.addTopic);
-router.get("/topics/:tId/delete", topicController.deleteTopic);
+router.post("/topics/:tId/delete", topicController.deleteTopic);
 
 // questionController routes (questions)
 router.get("/topics/:tId", questionController.listQuestions);
@@ -54,6 +54,6 @@ router.post(
 
 // questionApi routes (API)
 router.get("/api/questions/random", questionApi.getRandQuestion);
-router.post("api/questions/answer", questionApi.checkRandQuestion);
+router.post("/api/questions/answer", questionApi.checkRandQuestion);
 
 export { router };

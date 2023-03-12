@@ -15,8 +15,7 @@ const addAnswer = async (questionId, optionText, isCorrect) => {
   await sql`INSERT INTO question_answer_options (question_id, option_text, is_correct) VALUES (${questionId}, ${optionText}, ${isCorrect})`;
 };
 
-const deleteAnswer = async (questionId, optionId) => {
-  await sql`DELETE FROM question_answer_options WHERE question_id = ${questionId} AND id = ${optionId}`;
+const deleteAnswer = async (optionId) => {
   await sql`DELETE FROM question_answer_options WHERE id = ${optionId}`;
 };
 

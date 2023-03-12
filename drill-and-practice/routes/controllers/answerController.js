@@ -48,7 +48,7 @@ const deleteAnswer = async ({ params, response }) => {
   const topicId = params.tId;
   const questionId = params.qId;
   const optionId = params.oId;
-  await answerService.deleteAnswer(questionId, optionId);
+  await answerService.deleteAnswer(optionId);
   response.redirect(`/topics/${topicId}/questions/${questionId}`);
 };
 

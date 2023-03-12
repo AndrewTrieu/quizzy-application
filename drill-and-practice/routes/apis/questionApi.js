@@ -29,13 +29,18 @@ const getRandQuestion = async ({ response }) => {
 
 const checkRandQuestion = async ({ request, response }) => {
   const body = await request.body();
-  const questionId = body.value.questionId;
-  const optionId = body.value.optionId;
-  const correctOptionIds = await answerService.getCorrectOptionIds(questionId);
-  const correctOptionIdsArray = correctOptionIds.map((option) => {
-    return option.id;
-  });
-  const correct = correctOptionIdsArray.includes(optionId);
+  const data = await body.value;
+  console.log(data);
+  const questionId = data.questionId;
+  const optionId = data.optionId;
+  console.log(questionId);
+  console.log(optionId);
+  const correctOptionIds = (
+    await answerService.getCorrectOptionIds(questionId)
+  ).map((obj) => obj.id);
+  console.log(correctOptionIds);
+  const correct = correctOptionIds.includes(Number(optionId));
+  console.log(correct);
   response.body = { correct: correct };
 };
 

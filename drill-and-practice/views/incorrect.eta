@@ -8,7 +8,7 @@
 <% it.data.forEach(item => { %>
     <li><%= item.option_text %></li>
 <% }); %>
-<ul>
+</ul>
 <% } else { %>
 <p>Correct options are not found.</p>
 <% } %>
