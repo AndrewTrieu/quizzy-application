@@ -7,16 +7,16 @@ const validationRules = {
   question: [validasaur.required, validasaur.minLength(1)],
 };
 
-const addQuestion = async ({ request, response, params, state, render }) => {
+const addQuestion = async ({ request, response, params, context, render }) => {
   const topicId = params.tId;
-  const userId = (await state.session.get("user")).id;
+  const userId = (await context.state.session.get("user")).id;
   const body = request.body({ type: "form" });
   const formData = await body.value;
   const topicName = (await topicService.getTopicByTopicId(topicId)).name;
   const questionData = {
     topicId: topicId,
     topicName: topicName,
-    question: formData.get("question_text"),
+    question: formData.get("question"),
   };
   const [passes, errors] = await validasaur.validate(
     questionData,
@@ -93,11 +93,11 @@ const listQuizTopics = async ({ render }) => {
   });
 };
 
-const storeAnswer = async ({ response, params, state }) => {
+const storeAnswer = async ({ response, params, context }) => {
   const topicId = params.tId;
   const questionId = params.qId;
   const optionId = params.oId;
-  const userId = (await state.session.get("user")).id;
+  const userId = (await context.state.session.get("user")).id;
   const correctOptionIds = await answerService.getCorrectOptionIds(questionId);
   const correct = correctOptionIds.includes(Number(optionId));
   await answerService.storeAnswer(userId, questionId, optionId);

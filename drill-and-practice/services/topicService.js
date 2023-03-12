@@ -6,26 +6,23 @@ const addTopic = async (userId, name) => {
 
 const countTopics = async () => {
   const result = await sql`SELECT COUNT(id) FROM topics`;
-  console.log(result);
+  console.log(result[0].count);
   return result[0].count;
 };
 
 const getAllTopics = async () => {
   const result = await sql`SELECT * FROM topics ORDER BY name ASC`;
-  console.log(result);
   return result;
 };
 
 const getTopicsByUserId = async (userId) => {
   const result =
     await sql`SELECT * FROM topics WHERE user_id = ${userId} ORDER BY name ASC`;
-  console.log(result);
   return result;
 };
 
 const getTopicByTopicId = async (topicId) => {
   const result = await sql`SELECT * FROM topics WHERE id = ${topicId}`;
-  console.log(result);
   return result[0];
 };
 

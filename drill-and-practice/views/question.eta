@@ -30,7 +30,7 @@
 
 <form method="POST" action="/topics/<%= it.topicId %>/questions/<%= it.id %>/options">
 Option:<br/>
-<textarea name="option_text"><%= it.optionText ? it.optionText : "" %></textarea><br/>
+<input type="text" name="option"/><br/>
 Correct:
 <input type="checkbox" name="correct"/>
 <input type="submit" value="Add"/>

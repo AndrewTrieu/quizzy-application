@@ -36,7 +36,7 @@
 <% if (it.admin) { %>
 <form method="POST" action="/topics">
 Name:<br/>
-<input type="text" name="name" value="<%= it.name ? it.name : "" %>"/><br/>
+<input type="text" name="name"/><br/>
 <input type="submit" value="Add"/>
 </form>
 <% } %>

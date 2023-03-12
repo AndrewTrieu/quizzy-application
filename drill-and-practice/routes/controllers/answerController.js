@@ -6,10 +6,10 @@ const validationRules = {
   option: [validasaur.required, validasaur.minLength(1)],
 };
 
-const addAnswer = async ({ request, response, params, state, render }) => {
+const addAnswer = async ({ request, response, params, context, render }) => {
   const topicId = params.tId;
   const questionId = params.qId;
-  const userId = (await state.session.get("user")).id;
+  const userId = (await context.state.session.get("user")).id;
   const body = request.body({ type: "form" });
   const formData = await body.value;
   const answerData = {

@@ -36,7 +36,7 @@ const register = async ({ request, response, render }) => {
   }
 };
 
-const login = async ({ request, response, state, render }) => {
+const login = async ({ request, response, context, render }) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
   const userDatabase = await authService.findUser(params.get("email"));
@@ -58,7 +58,7 @@ const login = async ({ request, response, state, render }) => {
     return;
   }
 
-  await state.session.set("user", user);
+  await context.state.session.set("user", user);
   response.redirect("/topics");
 };
 
