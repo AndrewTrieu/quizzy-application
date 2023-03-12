@@ -6,7 +6,7 @@
 <% it.details.forEach((item) => { %>
     <p><form action="/topics/<%= it.topicId %>/questions/<%= it.id %>/options/<%= item.id %>/delete" method="POST">
     Content: <%= item.option_text %>; Correctness: <%= item.is_correct %>
-    <input type="submit" value="Delete pption" />
+    <input type="submit" value="Delete option" />
     </form></p>
 <% }); %>
 <% } else { %>
@@ -16,7 +16,7 @@
     </form>
 <% } %>
 
-<h2>Add an answer pption</h2>
+<h2>Add an answer option</h2>
 
 <% if (it.errors) { %>
 <ul>

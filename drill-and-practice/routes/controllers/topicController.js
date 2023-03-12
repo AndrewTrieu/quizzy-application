@@ -5,9 +5,9 @@ const validationRules = {
   name: [validasaur.required, validasaur.minLength(1)],
 };
 
-const addTopic = async ({ request, response, render, context }) => {
-  const userId = (await context.state.session.get("user")).id;
-  const admin = (await context.state.session.get("user")).admin;
+const addTopic = async ({ request, response, render, state }) => {
+  const userId = (await state.session.get("user")).id;
+  const admin = (await state.session.get("user")).admin;
   const body = request.body({ type: "form" });
   const params = await body.value;
   const topicData = {
@@ -33,17 +33,17 @@ const addTopic = async ({ request, response, render, context }) => {
   }
 };
 
-const deleteTopic = async ({ params, response, context }) => {
+const deleteTopic = async ({ params, response, state }) => {
   const topicId = params.tId;
-  const admin = (await context.state.session.get("user")).admin;
+  const admin = (await state.session.get("user")).admin;
   if (admin) {
     await topicService.deleteTopic(topicId);
   }
   response.redirect("/topics");
 };
 
-const listTopics = async ({ render, context }) => {
-  const user = await context.state.session.get("user");
+const listTopics = async ({ render, state }) => {
+  const user = await state.session.get("user");
   render("topics.eta", {
     admin: user.admin,
     topics: await topicService.getAllTopics(),

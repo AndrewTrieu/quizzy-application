@@ -6,7 +6,6 @@ const addTopic = async (userId, name) => {
 
 const countTopics = async () => {
   const result = await sql`SELECT COUNT(id) FROM topics`;
-  console.log(result[0].count);
   return result[0].count;
 };
 

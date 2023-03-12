@@ -8,7 +8,6 @@ const countAnswers = async () => {
 const getAnswersByQuestionId = async (questionId) => {
   const result =
     await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId}`;
-  console.log(result);
   return result;
 };
 

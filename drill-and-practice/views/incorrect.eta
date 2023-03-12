@@ -4,12 +4,13 @@
 <h2>Correct answer:</h2>
 
 <% if (it.data && it.data.length > 0) { %>
-
+<ul>
 <% it.data.forEach(item => { %>
-    <%= item %>
+    <li><%= item.option_text %></li>
 <% }); %>
+<ul>
 <% } else { %>
 <p>Correct options are not found.</p>
 <% } %>
 
-<a href="/quiz/<%= it.tid %>">Next question</a>
+<a href="/quiz/<%= it.tId %>">Next question</a>

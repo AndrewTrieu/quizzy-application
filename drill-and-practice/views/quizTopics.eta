@@ -8,7 +8,7 @@
 <% it.topics.forEach(topic => { %>
   <p>
     <li>
-      <a href="/quiz/<%= item.id %>"><%= item.name %></a>
+      <a href="/quiz/<%= topic.id %>"><%= topic.name %></a>
     </li>
   </p>
 <% }); %>

@@ -7,9 +7,9 @@ const validationRules = {
   question: [validasaur.required, validasaur.minLength(1)],
 };
 
-const addQuestion = async ({ request, response, params, context, render }) => {
+const addQuestion = async ({ request, response, params, state, render }) => {
   const topicId = params.tId;
-  const userId = (await context.state.session.get("user")).id;
+  const userId = (await state.session.get("user")).id;
   const body = request.body({ type: "form" });
   const formData = await body.value;
   const topicName = (await topicService.getTopicByTopicId(topicId)).name;
@@ -83,7 +83,7 @@ const getRandQuestion = async ({ params, response }) => {
   if (randQuestion === null) {
     response.body = "No questions in this topic!";
   } else {
-    response.redirect(`/topics/${topicId}/questions/${randQuestion.id}/quiz`);
+    response.redirect(`/quiz/${topicId}/questions/${randQuestion.id}`);
   }
 };
 
@@ -93,12 +93,15 @@ const listQuizTopics = async ({ render }) => {
   });
 };
 
-const storeAnswer = async ({ response, params, context }) => {
+const storeAnswer = async ({ response, params, state }) => {
   const topicId = params.tId;
   const questionId = params.qId;
   const optionId = params.oId;
-  const userId = (await context.state.session.get("user")).id;
-  const correctOptionIds = await answerService.getCorrectOptionIds(questionId);
+  const userId = (await state.session.get("user")).id;
+  const correctOptionIds = (
+    await answerService.getCorrectOptionIds(questionId)
+  ).map((obj) => obj.id);
+  console.log(correctOptionIds);
   const correct = correctOptionIds.includes(Number(optionId));
   await answerService.storeAnswer(userId, questionId, optionId);
   if (correct) {
@@ -115,9 +118,10 @@ const showCorrect = async ({ params, render }) => {
 const showIncorrect = async ({ params, render }) => {
   const questionId = params.qId;
   const correctOptions = {
-    data: [await answerService.getCorrectOptions(questionId)],
+    data: await answerService.getCorrectOptions(questionId),
     tId: params.tId,
   };
+  console.log(correctOptions);
   render("incorrect.eta", correctOptions);
 };
 
