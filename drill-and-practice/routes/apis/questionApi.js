@@ -21,7 +21,7 @@ const getRandQuestion = async ({ response }) => {
     const responseQuestion = {
       questionId: questionId,
       questionText: randQuestion.question_text,
-      answeroptions: optionsData,
+      answerOptions: optionsData,
     };
     response.body = responseQuestion;
   }
