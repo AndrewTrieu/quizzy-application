@@ -10,6 +10,8 @@ PostgreSQL is used as a database for storing topics, questions, and answers. The
 
 To access the functionality of the application, you need to create an account. After that, you can create topics and questions. The application provides a list of topics and allows creating multiple-choice questions into those topics that are then answered by self and others. Start answering questions by clicking on the "Quiz" button on the top right corner of the page.
 
+**To access admin mode, please use email ***admin@admin.com*** and password ***123456***.**
+
 ## API
 
 The application provides an API for retrieving and answering random questions. The API is available at <https://quizzy.fly.dev/api/questions/random>. To verify your answer, you need to provide the question ID and the answer ID in the request body, for example:
