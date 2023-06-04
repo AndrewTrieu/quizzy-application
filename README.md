@@ -4,7 +4,7 @@
 
 This is a web application that is used for repeated practice of learned content. The application provides a list of topics and allows creating multiple-choice questions into those topics that are then answered by self and others. The application also shows basic statistics: the total number of available questions and the total number of question answers. In addition, the application also provides an API for retrieving and answering random questions.
 
-PostgreSQL is used as a database for storing topics, questions, and answers. The database is managed using Flyway. The application is written in JavaScript using the Deno runtime. The application is deployed using Fly.io and can be accessed at <https://quizzy.fly.dev>.
+PostgreSQL is used as a database for storing topics, questions, and answers. The database is managed using Flyway. The application is written in JavaScript using the Deno runtime. The application is deployed using Fly.io and can be accessed at ~~<https://quizzy.fly.dev>~~ (DELETED).
 
 ## Usage
 
@@ -14,7 +14,7 @@ To access the functionality of the application, you need to create an account. A
 
 ## API
 
-The application provides an API for retrieving and answering random questions. The API is available at <https://quizzy.fly.dev/api/questions/random>. To verify your answer, you need to provide the question ID and the answer ID in the request body, for example:
+The application provides an API for retrieving and answering random questions. The API is available at ~~<https://quizzy.fly.dev/api/questions/random>~~ (DELETED). To verify your answer, you need to provide the question ID and the answer ID in the request body, for example:
 
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"questionId": 1, "answerId": 1}' https://quizzy.fly.dev/api/questions/answer
